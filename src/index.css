@@ -1,13 +1,83 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  margin: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+/* Pie */
+.chunk {
+   stroke: #000000;
+   fill-opacity: 1;
+   fill: #ffffff;
+}
+
+.pie-00 {
+   fill: #b23c2b;
+}
+
+.pie-01 {
+   fill: #d6604d;
+}
+
+.pie-02 {
+   fill: #f4a582;
+}
+
+.pie-03 {
+   fill: #b7dbc7;
+}
+
+.pie-04 {
+   fill: #b7e5f0;
+}
+
+.pie-05 {
+   fill: #92c5de;
+}
+
+.pie-06 {
+   fill: #4393c3;
+}
+
+.pie-07 {
+   fill: #2182ac;
+}
+
+.label, .title {
+   font-size:20px;
+   font-family:sans-serif;
+}
+
+.title {
+   font-weight: bold;
+}
+
+.right {
+   text-anchor:start
+}
+
+.left {
+   text-anchor:end
+}
+
+.middle {
+   text-anchor: middle
+}
+
+.form {
+   display: flex;
+   flex-direction: column;
+   width: 20rem;
+}
+
+.form [type=text] {
+   margin: 0 0 .5rem 0;   
+}
+
+.form [type=submit] {
+   margin: .5rem auto 0 0;
+}
+
+.pie-gallery {
+   display: flex;
 }
