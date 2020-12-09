@@ -18,7 +18,9 @@ export default (state = initialState, action) => {
         user: action.user
       };
     case LOGIN_FAILURE:
-      return {};
+      return {
+        errorMessage: action.error
+      };
     case LOGOUT:
       return {};
     default:

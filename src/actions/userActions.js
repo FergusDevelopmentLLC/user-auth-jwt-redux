@@ -22,26 +22,19 @@ export const login = (email, password, history) => {
     }
 
     fetch(`${ URL_PREFIX }/api/users/login`, requestOptions)
-      .then(response => {
-        return response.json()
-      })
+      .then(response => response.json())
       .then(user => {
-        
-        if(user.errors) {
-          console.log('Dispatching login failure')
+        if(user.error) {
           dispatch({ 
             type: LOGIN_FAILURE,
-            error: user.errors
+            error: user.error
           })
         }
         else {
-          console.log('Store user')
-          console.log('user', user)
           dispatch({
             type: LOGIN_SUCCESS,
             user: user
           })
-          console.log('history', history)
           history.push('/mypies', null)
         }
       })

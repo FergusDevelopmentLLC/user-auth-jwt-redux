@@ -28,22 +28,9 @@ export const LoginForm = ({
 
   }
 
-  const submitForm = (event) => {
+  const submit = (event) => {
     event.preventDefault()
-    console.log('email', email)
-    console.log('password', password)
-
-    
     login(email, password, history)
-
-    //dispatch(userActions.login(email, password));
-
-    // if(pie.title.isEmpty() || pie.pieces[0].isEmpty() || pie.pieces[1].isEmpty() || pie.pieces[2].isEmpty() || pie.pieces[3].isEmpty() || pie.pieces[4].isEmpty() || pie.pieces[5].isEmpty() || pie.pieces[6].isEmpty() || pie.pieces[7].isEmpty()) {
-    //   alert('All fields are required')
-    // }
-    // else {
-    //   createPie(pie, history)
-    // }
   }
 
   return (
@@ -56,7 +43,7 @@ export const LoginForm = ({
         <label htmlFor='password'>Password</label>
         <input type='password' name='password' value={ password } onChange={ handleChange } />
 
-        <input type='submit' value="Log in" disabled={ loginButtonDisabled } onClick={ submitForm } />
+        <input type='submit' value="Log in" disabled={ loginButtonDisabled } onClick={ submit } />
       </form>
     </div>
   )
