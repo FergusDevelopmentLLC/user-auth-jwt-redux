@@ -1,8 +1,8 @@
 import React, { Component, useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { login } from '../actions/userActions'
 import { useHistory } from "react-router";
+import PropTypes from 'prop-types'
 
 export const LoginForm = ({
   login
@@ -25,7 +25,6 @@ export const LoginForm = ({
     else if (event.target.name === 'password') {
       setPassword(event.target.value)
     }
-
   }
 
   const submit = (event) => {
@@ -50,15 +49,7 @@ export const LoginForm = ({
 }
 
 LoginForm.propTypes = {
-  // prop: PropTypes
+  login: PropTypes.func.isRequired
 }
 
-const mapStateToProps = (state) => ({
-  
-})
-
-const mapDispatchToProps = {
-  
-}
-
-export default connect(mapStateToProps, { login })(LoginForm)
+export default connect(null, { login })(LoginForm)
