@@ -24,10 +24,23 @@ export const login = (email, password, history) => {
     fetch(`${ URL_PREFIX }/api/users/login`, requestOptions)
       .then(response => response.json())
       .then(user => {
-        if(user.error) {
+        
+        if(user.error || user.errors) {
+          
+          let errorMessage = ''
+          
+          if(user.errors) {
+            Object.keys(user.errors).forEach((key, index) => {
+              errorMessage += key
+              errorMessage += ` ${[...new Set(user.errors[key])].join(', ')}`
+            })
+          }
+
+          if(user.error) errorMessage = user.error
+          
           dispatch({ 
             type: LOGIN_FAILURE,
-            error: user.error
+            error: errorMessage
           })
         }
         else {
@@ -39,7 +52,10 @@ export const login = (email, password, history) => {
         }
       })
       .catch((error) => {
-        console.log('error', error)
+        dispatch({ 
+          type: LOGIN_FAILURE,
+          error: error.toString()
+        })
       })
     }
 
