@@ -5,7 +5,8 @@ import { useHistory } from "react-router";
 import PropTypes from 'prop-types'
 
 export const LoginForm = ({
-  login
+  login,
+  errorMessage
 }) => {
 
   const [email, setEmail] = useState('')
@@ -35,6 +36,7 @@ export const LoginForm = ({
   return (
     <div>
       <h1>Log in</h1>
+      <div className="error">{ errorMessage }</div>
       <form className='form'>
         <label htmlFor='email'>Email</label>
         <input type='text' name='email' value={ email } onChange={ handleChange } />
@@ -52,4 +54,10 @@ LoginForm.propTypes = {
   login: PropTypes.func.isRequired
 }
 
-export default connect(null, { login })(LoginForm)
+const mapStateToProps = (state) => {
+  return {
+    errorMessage: state.authenticationReducer.errorMessage
+  }
+}
+
+export default connect(mapStateToProps, { login })(LoginForm)

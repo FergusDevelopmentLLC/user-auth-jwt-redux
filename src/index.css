@@ -136,3 +136,8 @@ nav div a {
    border: 0;
    margin-left: 3rem;
 }
+
+.error {
+   color: red;
+   margin: 0 0 .5rem 0;
+}

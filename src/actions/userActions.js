@@ -76,17 +76,17 @@ export const signup = (email, password, firstname, lastname, history) => {
 
     fetch(`${ URL_PREFIX }/api/users`, requestOptions)
       .then(response => response.json())
-      .then(user => {
-        if(user.error || user.errors) {
+      .then(response => {
+        if(response.error || response.errors) {
           dispatch({ 
             type: SIGNUP_FAILURE,
-            error: getErrorMessage(user)
+            error: getErrorMessage(response)
           })
         }
         else {
           dispatch({
             type: SIGNUP_SUCCESS,
-            user: user
+            user: response.user
           })
           history.push('/mypies', null)
         }

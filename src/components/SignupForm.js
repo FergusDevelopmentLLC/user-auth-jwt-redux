@@ -5,7 +5,8 @@ import { useHistory } from "react-router";
 import PropTypes from 'prop-types'
 
 export const SignupForm = ({
-  signup
+  signup,
+  errorMessage
 }) => {
 
   const [email, setEmail] = useState('')
@@ -39,6 +40,7 @@ export const SignupForm = ({
   return (
     <div>
       <h1>Sign up</h1>
+      <div className="error">{ errorMessage }</div>
       <form className='form'>
         
         <label htmlFor='firstname'>First name (required)</label>
@@ -63,4 +65,10 @@ SignupForm.propTypes = {
   signup: PropTypes.func.isRequired
 }
 
-export default connect(null, { signup })(SignupForm)
+const mapStateToProps = (state) => {
+  return {
+    errorMessage: state.authenticationReducer.errorMessage
+  }
+}
+
+export default connect(mapStateToProps, { signup })(SignupForm)
