@@ -2,12 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Pie = ({
-  title = '',
-  pieces = [],
-  chunks = []
+  pieData = {
+    title: '',
+    pieces: [],
+    chunks: []
+  }
 }) => {
 
-    const fillChunk = (id) => chunks.includes(id) ? true : false
+    const fillChunk = (id) => pieData.chunks.includes(id) ? true : false
     
     return (
       <svg viewBox="0 0 600 600" id="pie">
@@ -88,17 +90,17 @@ const Pie = ({
           </g>
         </g>
 
-        <text><tspan x="300" y="30" className="title middle" >{ title }</tspan></text>
+        <text><tspan x="300" y="30" className="title middle" >{ pieData.title }</tspan></text>
 
-        <text><tspan x="340" y="75"  className="label right" >{ pieces[0] }</tspan></text>
-        <text><tspan x="490" y="175" className="label right" >{ pieces[1] }</tspan></text>
-        <text><tspan x="480" y="440" className="label right" >{ pieces[2] }</tspan></text>
-        <text><tspan x="340" y="525" className="label right" >{ pieces[3] }</tspan></text>
+        <text><tspan x="340" y="75"  className="label right" >{ pieData.pieces[0] }</tspan></text>
+        <text><tspan x="490" y="175" className="label right" >{ pieData.pieces[1] }</tspan></text>
+        <text><tspan x="480" y="440" className="label right" >{ pieData.pieces[2] }</tspan></text>
+        <text><tspan x="340" y="525" className="label right" >{ pieData.pieces[3] }</tspan></text>
     
-        <text><tspan x="270" y="525" className="label left"  >{ pieces[4] }</tspan></text>
-        <text><tspan x="130" y="440" className="label left"  >{ pieces[5] }</tspan></text>
-        <text><tspan x="120" y="175" className="label left"  >{ pieces[6] }</tspan></text>
-        <text><tspan x="270" y="75"  className="label left"  >{ pieces[7] }</tspan></text>
+        <text><tspan x="270" y="525" className="label left"  >{ pieData.pieces[4] }</tspan></text>
+        <text><tspan x="130" y="440" className="label left"  >{ pieData.pieces[5] }</tspan></text>
+        <text><tspan x="120" y="175" className="label left"  >{ pieData.pieces[6] }</tspan></text>
+        <text><tspan x="270" y="75"  className="label left"  >{ pieData.pieces[7] }</tspan></text>
       
       </svg>
     ) 
@@ -109,4 +111,3 @@ Pie.propTypes = {
 }
 
 export default Pie
-
