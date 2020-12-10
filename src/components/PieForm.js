@@ -6,7 +6,8 @@ import { createPie } from '../actions/pieActions'
 
 export const PieForm = ({
   createPie,
-  history
+  history,
+  user
 }) => {
 
   const [pie, setPie] = useState({
@@ -71,7 +72,9 @@ export const PieForm = ({
             alert('All fields are required')
           }
           else {
-            createPie(pie, history)
+            pie.user_id = user.id
+            console.log('pie', pie)
+            createPie(pie, history, user)
           }
         }} />
       </form>
@@ -83,4 +86,10 @@ PieForm.propTypes = {
   createPie: PropTypes.func.isRequired
 }
 
-export default connect(null, { createPie })(PieForm)
+const mapStateToProps = (state) => {
+  return {
+    user: state.authenticationReducer.user
+  }
+}
+
+export default connect(mapStateToProps, { createPie })(PieForm)

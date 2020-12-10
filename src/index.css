@@ -67,8 +67,15 @@ body {
 
 .pie-gallery-container {
    min-width: 15rem;
-   margin: 0 1rem;
+   margin: 0 1rem 1rem 0;
+   border: 1px solid gray;
+   padding: .5rem;
 }
+
+.pie-gallery-container div {
+   text-align: center;
+}
+
 
 .pie-container {
    max-width: 20rem;

@@ -2,7 +2,7 @@ import { CREATE_PIE, FETCH_PIE, UPDATE_PIE, FETCH_PIES } from './types'
 import { URL_PREFIX } from './urlPrefix'
 import { refreshUser } from '../actions/userActions'
 
-export const createPie = (pie, history) => dispatch => {
+export const createPie = (pie, history, user) => dispatch => {
   
   const options = {
     method: 'POST',
@@ -13,14 +13,14 @@ export const createPie = (pie, history) => dispatch => {
   fetch(`${ URL_PREFIX }/pies`, options)
     .then(res => res.json())
     .then((pie) => {
-      dispatch({
+      return dispatch({
         type: CREATE_PIE,
         payload: pie
       })
-      history.push('/pies')
+    }).then(() => {
+      dispatch(refreshUser(user))
     })
-  
-}
+  }
 
 export const fetchPie = (id) => dispatch => {
   const apiUrl = `${ URL_PREFIX }/pies/${id}`
@@ -28,7 +28,7 @@ export const fetchPie = (id) => dispatch => {
   fetch(apiUrl, null)
     .then(res => res.json())
     .then((pie) => {
-      dispatch({
+      return dispatch({
         type: FETCH_PIE,
         payload: pie
       })

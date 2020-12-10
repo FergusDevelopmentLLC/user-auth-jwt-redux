@@ -15,7 +15,7 @@ const MyPies = ({
           pies.map((pie) => {
             return  <div key={pie.id} className="pie-gallery-container">
                       <Pie pieData={ pie } />
-                      <Link to={`/pies/${pie.id}`}>Update</Link>
+                      <div><Link to={`/pies/${pie.id}`}>Update</Link></div>
                     </div>
           })
         }

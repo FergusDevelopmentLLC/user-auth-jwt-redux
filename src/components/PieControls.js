@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { updatePie } from '../actions/pieActions'
-import { refreshUser } from '../actions/userActions'
 
 const PieControls = ({
   pieData = {
@@ -55,7 +54,6 @@ const PieControls = ({
 
 PieControls.propTypes = {
   updatePie: PropTypes.func.isRequired,
-  refreshUser: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -64,4 +62,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { updatePie, refreshUser })(PieControls)
+export default connect(mapStateToProps, { updatePie })(PieControls)
