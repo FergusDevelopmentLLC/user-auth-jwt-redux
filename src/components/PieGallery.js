@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import Pie from './Pie'
 import { connect } from 'react-redux'
@@ -20,7 +19,6 @@ const PieGallery = ({
         pies.map((pie) => {
           return  <div key={pie.id} className="pie-gallery-container">
                     <Pie pieData={ pie } />
-                    <Link to={ `/pies/${pie.id}`}>View</Link>
                   </div>
         })
       }
