@@ -10,8 +10,23 @@ import MyPies from "./components/MyPies"
 import PrivateRoute from './components/PrivateRoute'
 import PieController from './components/PieController'
 
+{/* <PrivateRoute exact path="/pies/new" render={(props) => (<PieForm {...props} />)} /> */}
+{/* <PrivateRoute exact path="/pies/:id" render={(props) => {
+            props = {
+              ...props,
+              id: parseInt(props.match.params.id)
+            }
+            return <PieController {...props} />
+          }} /> */}
 
 const App = () => {
+
+  //https://stackoverflow.com/questions/49186183/reactjs-privateroute-that-accesses-url-parameter
+  const PieControllerWrapper = props => {
+    if(props.match.params.id) return <PieController {...{...props, id: parseInt(props.match.params.id)}} />
+    return null
+  }
+
   return (
     <Provider store={ store }>
       <Router>
@@ -21,8 +36,10 @@ const App = () => {
           <Route exact path="/login" component={ LoginForm } />
           <Route exact path="/signup" component={ SignupForm } />
           <PrivateRoute exact path="/mypies" component={ MyPies } />
-          <PrivateRoute exact path="/pies/new" render={(props) => (<PieForm {...props} />)} />
-          <Route exact path="/pies/:id" render={(props) => (<PieController {...props} id={ parseInt(props.match.params.id) }/>)} />
+          
+          <PrivateRoute exact path="/pies/new" component={ PieForm } />
+          <PrivateRoute exact path="/pies/:id" component={ PieControllerWrapper } />
+          
         </Switch>
       </Router>
     </Provider>

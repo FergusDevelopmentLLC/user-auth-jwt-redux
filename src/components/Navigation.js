@@ -16,6 +16,7 @@ const Navigation = ({
         <>
         <div><Link to={"/"}>Home</Link></div>
         <div><Link to={"/mypies"}>My pies</Link></div>
+        <div><Link to={"/pies/new"}>New pie</Link></div>
         <div><Link to={'/'} onClick={() => logout()}>Logout</Link></div>
         </>
       )

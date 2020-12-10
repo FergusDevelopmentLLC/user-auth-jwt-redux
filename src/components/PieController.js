@@ -8,13 +8,12 @@ import PieControls from './PieControls'
 const PieController = ({
   id=0,
   fetchPie,
-  updatePie,
   pie
 }) => {
 
   useEffect(() => {
     fetchPie(id)
-  }, [id, fetchPie, updatePie])
+  }, [id, fetchPie])
   
   const getPie = () => Object.keys(pie).length > 0 ? <Pie pieData={ pie } /> : null
   const getPieControls = () => Object.keys(pie).length > 0 ? <PieControls pieData={ pie } /> : null

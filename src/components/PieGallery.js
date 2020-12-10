@@ -10,10 +10,14 @@ const PieGallery = ({
 }) => {
 
   useEffect(() => {
-    fetchPies()
-  }, [fetchPies])
+    if(pies.length === 0) {
+      fetchPies()
+    }
+  }, [fetchPies, pies])
 
   return (
+    <>
+    <h1>Community pies</h1>
     <div className="pie-gallery">
       {
         pies.map((pie) => {
@@ -23,7 +27,7 @@ const PieGallery = ({
         })
       }
     </div>
-    
+    </>
   )
 }
 

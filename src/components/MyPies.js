@@ -1,9 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import Pie from './Pie'
+import { Link } from 'react-router-dom'
 
-function MyPies(props) {
+const MyPies = ({
+  pies = []
+}) => {
   return (
-    <div>My Pies</div>
+    <div>
+      <h1>My pies</h1>
+      <div className="pie-gallery">
+        {
+          pies.map((pie) => {
+            return  <div key={pie.id} className="pie-gallery-container">
+                      <Pie pieData={ pie } />
+                      <Link to={`/pies/${pie.id}`}>Update</Link>
+                    </div>
+          })
+        }
+      </div>
+    </div>
   )
 }
 
@@ -11,5 +28,11 @@ MyPies.propTypes = {
 
 }
 
-export default MyPies
+const mapStateToProps = (state) => {
+  return {
+    pies: state.authenticationReducer.user.pies
+  }
+}
+
+export default connect(mapStateToProps, null)(MyPies)
 
