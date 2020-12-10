@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from '../actions/types';
+import { SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from '../actions/types';
 
 const initialState = {
   loggedIn: false,
@@ -23,6 +23,20 @@ export default (state = initialState, action) => {
       };
     case LOGOUT:
       return {};
+    case SIGNUP_REQUEST:
+      return {
+        loggingIn: true,
+        user: action.user
+      };
+    case SIGNUP_SUCCESS:
+      return {
+        loggedIn: true,
+        user: action.user
+      };
+    case SIGNUP_FAILURE:
+      return {
+        errorMessage: action.error
+      };
     default:
       return state
   }

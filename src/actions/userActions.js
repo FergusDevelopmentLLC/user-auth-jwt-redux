@@ -1,12 +1,22 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from './types'
+import { SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from './types'
 import { URL_PREFIX } from './urlPrefix'
 
+String.prototype.capitalize = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1)
+}
 
-//import { history } from '../_helpers';
-//login,
-//getAll
-export const userActions = {
-  logout
+const getErrorMessage = ( user ) => {
+  
+  let errorMessage = ''
+  
+  if(user.errors) {
+    errorMessage = Object.keys(user.errors).map((key) => `${key.capitalize()} ${[...new Set(user.errors[key])].join(', ')}`).join(', ') + '.'
+  }
+  else if(user.error) {
+    errorMessage = user.error
+  }
+  
+  return errorMessage
 }
 
 export const login = (email, password, history) => {
@@ -26,21 +36,9 @@ export const login = (email, password, history) => {
       .then(user => {
         
         if(user.error || user.errors) {
-          
-          let errorMessage = ''
-          
-          if(user.errors) {
-            Object.keys(user.errors).forEach((key, index) => {
-              errorMessage += key
-              errorMessage += ` ${[...new Set(user.errors[key])].join(', ')}`
-            })
-          }
-
-          if(user.error) errorMessage = user.error
-          
           dispatch({ 
             type: LOGIN_FAILURE,
-            error: errorMessage
+            error: getErrorMessage(user)
           })
         }
         else {
@@ -58,12 +56,46 @@ export const login = (email, password, history) => {
         })
       })
     }
-
-  
-  
 }
 
-function logout() {
-  //userService.logout();
-  return { type: LOGOUT };
+export const logout = () => {
+  return { type: LOGOUT }
+}
+
+export const signup = (email, password, firstname, lastname, history) => {
+  
+  return dispatch => {
+
+    dispatch({ type: SIGNUP_REQUEST, email })
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({"user":{"email":email, "password":password, "first_name": firstname, "last_name": lastname}})
+    }
+
+    fetch(`${ URL_PREFIX }/api/users`, requestOptions)
+      .then(response => response.json())
+      .then(user => {
+        if(user.error || user.errors) {
+          dispatch({ 
+            type: SIGNUP_FAILURE,
+            error: getErrorMessage(user)
+          })
+        }
+        else {
+          dispatch({
+            type: SIGNUP_SUCCESS,
+            user: user
+          })
+          history.push('/mypies', null)
+        }
+      })
+      .catch((error) => {
+        dispatch({ 
+          type: SIGNUP_FAILURE,
+          error: error.toString()
+        })
+      })
+    }
 }
