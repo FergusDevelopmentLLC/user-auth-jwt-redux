@@ -1,5 +1,6 @@
 import { CREATE_PIE, FETCH_PIE, UPDATE_PIE, FETCH_PIES } from './types'
 import { URL_PREFIX } from './urlPrefix'
+import { refreshUser } from '../actions/userActions'
 
 export const createPie = (pie, history) => dispatch => {
   
@@ -35,7 +36,7 @@ export const fetchPie = (id) => dispatch => {
   
 }
 
-export const updatePie = (pie, history) => dispatch => {
+export const updatePie = (pie, user) => dispatch => {
 
   const options = {
     method: 'PATCH',
@@ -48,12 +49,12 @@ export const updatePie = (pie, history) => dispatch => {
   fetch(`${apiUrl}`, options)
     .then(res => res.json())
     .then((savedPie) => {
-      
-      dispatch({
+      return dispatch({
         type: UPDATE_PIE,
         payload: savedPie
       })
-  
+    }).then(() => {
+      dispatch(refreshUser(user))
     })
 }
 

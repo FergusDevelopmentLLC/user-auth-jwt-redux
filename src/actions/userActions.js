@@ -1,5 +1,6 @@
-import { SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from './types'
+import { SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, REFRESH_USER_REQUEST, REFRESH_USER_FAILURE, REFRESH_USER_SUCCESS } from './types'
 import { URL_PREFIX } from './urlPrefix'
+
 
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1)
@@ -94,6 +95,42 @@ export const signup = (email, password, firstname, lastname, history) => {
       .catch((error) => {
         dispatch({ 
           type: SIGNUP_FAILURE,
+          error: error.toString()
+        })
+      })
+    }
+}
+
+export const refreshUser = (user) => {
+  
+  return dispatch => {
+
+    dispatch({ type: REFRESH_USER_REQUEST, email: user.email })
+
+    const requestOptions = {
+      method: 'GET',
+      headers: (user && user.token) ? { 'Authorization': 'Bearer ' + user.token } : {}
+    }
+
+    fetch(`${ URL_PREFIX }/user`, requestOptions)
+      .then(response => response.json())
+      .then(response => {
+        if(response.error || response.errors) {
+          dispatch({ 
+            type: REFRESH_USER_FAILURE,
+            error: getErrorMessage(response)
+          })
+        }
+        else {
+          dispatch({
+            type: REFRESH_USER_SUCCESS,
+            user: response.user
+          })
+        }
+      })
+      .catch((error) => {
+        dispatch({ 
+          type: REFRESH_USER_FAILURE,
           error: error.toString()
         })
       })

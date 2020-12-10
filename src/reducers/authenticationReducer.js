@@ -1,4 +1,4 @@
-import { SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from '../actions/types';
+import { REFRESH_USER_REQUEST, REFRESH_USER_SUCCESS, REFRESH_USER_FAILURE, SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from '../actions/types';
 
 const initialState = {
   loggedIn: false,
@@ -34,6 +34,17 @@ export default (state = initialState, action) => {
         user: action.user
       };
     case SIGNUP_FAILURE:
+      return {
+        errorMessage: action.error
+      };
+    case REFRESH_USER_REQUEST:
+      return state
+    case REFRESH_USER_SUCCESS:
+      return {
+        loggedIn: true,
+        user: action.user
+      };
+    case REFRESH_USER_FAILURE:
       return {
         errorMessage: action.error
       };

@@ -2,13 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { updatePie } from '../actions/pieActions'
+import { refreshUser } from '../actions/userActions'
 
 const PieControls = ({
   pieData = {
     pieces: [],
     chunks: []
   },
-  updatePie
+  updatePie,
+  user
 }) => {
 
   const addChunk = (index) => {
@@ -18,7 +20,7 @@ const PieControls = ({
         updatePie({
           ...pieData,
           chunks: [...pieData.chunks, chunk]
-        })
+        }, user)
         break
       }
     }
@@ -31,7 +33,7 @@ const PieControls = ({
         updatePie({
           ...pieData,
           chunks: pieData.chunks.filter((c) => c !== chunk)
-        })
+        }, user)
         break
       }
     }
@@ -52,7 +54,14 @@ const PieControls = ({
 }
 
 PieControls.propTypes = {
-  updatePie: PropTypes.func.isRequired
+  updatePie: PropTypes.func.isRequired,
+  refreshUser: PropTypes.func.isRequired
 }
 
-export default connect(null, { updatePie })(PieControls)
+const mapStateToProps = (state) => {
+  return {
+    user: state.authenticationReducer.user
+  }
+}
+
+export default connect(mapStateToProps, { updatePie, refreshUser })(PieControls)
