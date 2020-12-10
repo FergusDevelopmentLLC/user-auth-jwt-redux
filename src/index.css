@@ -44,12 +44,13 @@ body {
 }
 
 .label, .title {
-   font-size:20px;
+   font-size:22px;
    font-family:sans-serif;
 }
 
 .title {
    font-weight: bold;
+   font-size: 32px;
 }
 
 .right {
@@ -62,6 +63,11 @@ body {
 
 .middle {
    text-anchor: middle
+}
+
+.pie-gallery-container {
+   min-width: 15rem;
+   margin: 0 1rem;
 }
 
 .pie-container {
@@ -100,4 +106,7 @@ h4 {
 
 .pie-gallery {
    display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   justify-content: center;
 }
