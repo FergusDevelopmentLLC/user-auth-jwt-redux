@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import Pie from '../components/Pie'
+import Pie from './Pie'
 import { connect } from 'react-redux'
 import { fetchPies } from '../actions/pieActions'
 
-const PieGalleryContainer = ({
+const PieGallery = ({
   fetchPies,
   pies
 }) => {
@@ -18,8 +18,8 @@ const PieGalleryContainer = ({
     <div className="pie-gallery">
       {
         pies.map((pie) => {
-          return  <div key={pie.id} style={{width: '15rem'}}>
-                    <Pie pieces={ pie.pieces } chunks={ pie.chunks } title={ pie.title } />
+          return  <div key={pie.id} className="pie-gallery-container">
+                    <Pie pieData={ pie } />
                     <Link to={ `/pies/${pie.id}`}>View</Link>
                   </div>
         })
@@ -29,7 +29,7 @@ const PieGalleryContainer = ({
   )
 }
 
-PieGalleryContainer.propTypes = {
+PieGallery.propTypes = {
   fetchPies: PropTypes.func.isRequired
 }
 
@@ -39,5 +39,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchPies })(PieGalleryContainer)
-
+export default connect(mapStateToProps, { fetchPies })(PieGallery)
