@@ -30,9 +30,7 @@ const PieControls = ({
       if(pieData.chunks.includes(chunk)) {
         updatePie({
           ...pieData,
-          chunks: pieData.chunks.filter((c) => {
-            return c != chunk
-          })
+          chunks: pieData.chunks.filter((c) => c !== chunk)
         })
         break
       }
