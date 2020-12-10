@@ -1,33 +1,25 @@
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom"
-import { Link } from 'react-router-dom'
 import { Provider } from "react-redux"
-import PieContainer from "./containers/PieContainer"
-import PieForm from "./components/PieForm"
 import store from "./store"
-import PieGallery from "./components/PieGallery"
 import LoginForm from './components/LoginForm'
 import SignupForm from './components/SignupForm'
+import PieForm from "./components/PieForm"
+import PieGallery from "./components/PieGallery"
 import MyPies from "./components/MyPies"
 import PrivateRoute from './components/PrivateRoute'
-
+import PieController from "./components/PieController"
 
 const App = () => {
   return (
     <Provider store={ store }>
       <Router>
-        <nav>
-          <div><Link to={"/"}>Home</Link></div>
-          <div><Link to={"/login"}>Login</Link></div>
-          <div><Link to={"/logout"}>Logout</Link></div>
-          <div><Link to={"/signup"}>Signup</Link></div>
-        </nav>
         <Switch>
           <Route exact path="/" component={ PieGallery } />
           <Route exact path="/login" component={ LoginForm } />
           <Route exact path="/signup" component={ SignupForm } />
           <PrivateRoute exact path="/mypies" component={ MyPies } />
           <PrivateRoute exact path="/pies/new" render={(props) => (<PieForm {...props} />)} />
-          <Route exact path="/pies/:id" render={(props) => (<PieContainer {...props} id={ parseInt(props.match.params.id) }/>)} />
+          <Route exact path="/pies/:id" render={(props) => (<PieController {...props} id={ parseInt(props.match.params.id) }/>)} />
         </Switch>
       </Router>
     </Provider>
