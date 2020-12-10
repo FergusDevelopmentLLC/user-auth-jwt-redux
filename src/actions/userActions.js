@@ -5,15 +5,15 @@ String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1)
 }
 
-const getErrorMessage = ( user ) => {
+const getErrorMessage = ( response ) => {
   
   let errorMessage = ''
   
-  if(user.errors) {
-    errorMessage = Object.keys(user.errors).map((key) => `${key.capitalize()} ${[...new Set(user.errors[key])].join(', ')}`).join(', ') + '.'
+  if(response.errors) {
+    errorMessage = Object.keys(response.errors).map((key) => `${key.capitalize()} ${[...new Set(response.errors[key])].join(', ')}`).join(', ') + '.'
   }
-  else if(user.error) {
-    errorMessage = user.error
+  else if(response.error) {
+    errorMessage = response.error
   }
   
   return errorMessage
@@ -33,18 +33,18 @@ export const login = (email, password, history) => {
 
     fetch(`${ URL_PREFIX }/api/users/login`, requestOptions)
       .then(response => response.json())
-      .then(user => {
+      .then(response => {
         
-        if(user.error || user.errors) {
+        if(response.error || response.errors) {
           dispatch({ 
             type: LOGIN_FAILURE,
-            error: getErrorMessage(user)
+            error: getErrorMessage(response)
           })
         }
         else {
           dispatch({
             type: LOGIN_SUCCESS,
-            user: user
+            user: response.user
           })
           history.push('/mypies', null)
         }
