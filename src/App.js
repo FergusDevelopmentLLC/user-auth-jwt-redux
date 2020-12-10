@@ -7,7 +7,6 @@ import store from "./store"
 import PieGallery from "./components/PieGallery"
 import LoginForm from './components/LoginForm'
 import SignupForm from './components/SignupForm'
-import Home from './components/Home'
 import MyPies from "./components/MyPies"
 import PrivateRoute from './components/PrivateRoute'
 
@@ -17,11 +16,10 @@ const App = () => {
     <Provider store={ store }>
       <Router>
         <nav>
-          <div><Link to={"/home"}>Home</Link></div>
+          <div><Link to={"/"}>Home</Link></div>
           <div><Link to={"/login"}>Login</Link></div>
           <div><Link to={"/logout"}>Logout</Link></div>
           <div><Link to={"/signup"}>Signup</Link></div>
-          <div><Link to={"/pies"}>Pies</Link></div>
         </nav>
         <Switch>
           <Route exact path="/" component={ PieGallery } />
