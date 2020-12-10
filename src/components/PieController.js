@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import Pie from '../components/Pie'
+import Pie from './Pie'
 import { connect } from 'react-redux'
 import { fetchPie } from '../actions/pieActions'
-import PieControls from '../components/PieControls'
+import PieControls from './PieControls'
 
-const PieContainer = ({
+const PieController = ({
   id=0,
   fetchPie,
   updatePie,
@@ -27,7 +27,7 @@ const PieContainer = ({
   )
 }
 
-PieContainer.propTypes = {
+PieController.propTypes = {
   id: PropTypes.number.isRequired,
   fetchPie: PropTypes.func.isRequired
 }
@@ -38,5 +38,5 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchPie })(PieContainer)
+export default connect(mapStateToProps, { fetchPie })(PieController)
 
