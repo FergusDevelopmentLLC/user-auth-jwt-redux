@@ -35,9 +35,11 @@ const PieContainer = ({
     }
   }
 
+  const getPie = () => Object.keys(pie).length > 0 ? <Pie pieData={ pie } /> : null
+
   return (
     <div>
-      <Pie pieces={ pie.pieces } chunks={ pie.chunks } title={ pie.title } />
+      { getPie() }
       { getButtons() }
     </div>
   )
