@@ -12,7 +12,7 @@ const Pie = ({
     const fillChunk = (id) => pieData.chunks.includes(id) ? true : false
     
     return (
-      <svg viewBox="0 0 600 600" id="pie">
+      <svg viewBox="0 0 600 600">
       
         <g transform="translate(0,300)">
     
@@ -107,7 +107,7 @@ const Pie = ({
 }
 
 Pie.propTypes = {
-  //pieceTitles: PropTypes.array.isRequired  
+  pieData: PropTypes.object.isRequired
 }
 
 export default Pie
