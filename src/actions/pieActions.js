@@ -16,7 +16,6 @@ export const createPie = (pie, history) => dispatch => {
         type: CREATE_PIE,
         payload: pie
       })
-      console.log('saved pie', pie)
       history.push('/pies')
     })
   
@@ -54,7 +53,7 @@ export const updatePie = (pie, history) => dispatch => {
         type: UPDATE_PIE,
         payload: savedPie
       })
-      console.log('savedPie', savedPie)
+  
     })
 }
 

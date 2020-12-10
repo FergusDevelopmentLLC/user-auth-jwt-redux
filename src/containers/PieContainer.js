@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Pie from '../components/Pie'
 import { connect } from 'react-redux'
 import { fetchPie } from '../actions/pieActions'
-import { updatePie } from '../actions/pieActions'
+import PieControls from '../components/PieControls'
 
 const PieContainer = ({
   id=0,
@@ -15,40 +15,21 @@ const PieContainer = ({
   useEffect(() => {
     fetchPie(id)
   }, [id, fetchPie, updatePie])
-
-  const getButtons = () => {
-    if(pie.pieces) {
-      return pie.pieces.map((piece, index) => {
-        return <div key={index}><button onClick={()=> {
-          const array = [parseInt(1 + index.toString()), parseInt(2 + index.toString()), parseInt(3 + index.toString()), parseInt(4 + index.toString()), parseInt(5 + index.toString()), parseInt(6 + index.toString()), parseInt(7 + index.toString())]
-          for (let chunk of array) {
-            if(!pie.chunks.includes(chunk)) {
-              updatePie({
-                ...pie,
-                chunks: [...pie.chunks, chunk]
-              })
-              break
-            }
-          }
-        }}>Add { piece }</button></div>
-      })
-    }
-  }
-
+  
   const getPie = () => Object.keys(pie).length > 0 ? <Pie pieData={ pie } /> : null
-
+  const getPieControls = () => Object.keys(pie).length > 0 ? <PieControls pieData={ pie } /> : null
+  
   return (
-    <div>
+    <div className='pie-container'>
       { getPie() }
-      { getButtons() }
+      { getPieControls() }
     </div>
   )
 }
 
 PieContainer.propTypes = {
   id: PropTypes.number.isRequired,
-  fetchPie: PropTypes.func.isRequired,
-  updatePie: PropTypes.func.isRequired,
+  fetchPie: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -57,5 +38,5 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchPie, updatePie })(PieContainer)
+export default connect(mapStateToProps, { fetchPie })(PieContainer)
 
