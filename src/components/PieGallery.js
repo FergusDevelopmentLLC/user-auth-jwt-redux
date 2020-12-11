@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Pie from './Pie'
 import { connect } from 'react-redux'
 import { fetchPies } from '../actions/pieActions'
+import { Link } from 'react-router-dom'
 
 const PieGallery = ({
   fetchPies,
@@ -10,19 +11,17 @@ const PieGallery = ({
 }) => {
 
   useEffect(() => {
-    if(pies.length === 0) {
-      fetchPies()
-    }
-  }, [fetchPies, pies])
+    fetchPies()
+  }, [])
 
   return (
     <>
-    <h1>Community pies</h1>
     <div className="pie-gallery">
       {
         pies.map((pie) => {
           return  <div key={pie.id} className="pie-gallery-container">
                     <Pie pieData={ pie } />
+                    <div><Link to={`/pies/${pie.id}`}>Update</Link></div>
                   </div>
         })
       }
