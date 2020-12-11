@@ -18,7 +18,7 @@ export const createPie = (pie, history, user) => dispatch => {
         payload: pie
       })
     }).then(() => {
-      dispatch(refreshUser(user))
+      //dispatch(refreshUser(user))
     })
   }
 
@@ -54,7 +54,7 @@ export const updatePie = (pie, user) => dispatch => {
         payload: savedPie
       })
     }).then(() => {
-      dispatch(refreshUser(user))
+      //dispatch(refreshUser(user))
     })
 }
 
