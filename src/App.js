@@ -6,7 +6,6 @@ import LoginForm from './components/LoginForm'
 import SignupForm from './components/SignupForm'
 import PieForm from "./components/PieForm"
 import PieGallery from "./components/PieGallery"
-import MyPies from "./components/MyPies"
 import PrivateRoute from './components/PrivateRoute'
 import PieController from './components/PieController'
 
@@ -35,11 +34,11 @@ const App = () => {
           <Route exact path="/" component={ PieGallery } />
           <Route exact path="/login" component={ LoginForm } />
           <Route exact path="/signup" component={ SignupForm } />
-          <PrivateRoute exact path="/mypies" component={ MyPies } />
-          
+          <PrivateRoute exact path="/pies" component={ PieGallery } />
           <PrivateRoute exact path="/pies/new" component={ PieForm } />
           <PrivateRoute exact path="/pies/:id" component={ PieControllerWrapper } />
           
+
         </Switch>
       </Router>
     </Provider>
