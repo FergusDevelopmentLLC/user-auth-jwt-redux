@@ -1,7 +1,7 @@
 import { SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, REFRESH_USER_REQUEST, REFRESH_USER_FAILURE, REFRESH_USER_SUCCESS } from './types'
 import { URL_PREFIX } from './urlPrefix'
 
-
+//TODO, where should this go?
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1)
 }
@@ -43,11 +43,17 @@ export const login = (email, password, history) => {
           })
         }
         else {
+          //only pick up id, email, firstName, lastName for user
           dispatch({
             type: LOGIN_SUCCESS,
-            user: response.user
+            user: {
+              id: response.user.id,
+              email: response.user.email,
+              firstName: response.user.first_name,
+              lastName:  response.user.last_name
+            }
           })
-          history.push('/mypies', null)
+          history.push('/pies', null)
         }
       })
       .catch((error) => {
@@ -85,11 +91,17 @@ export const signup = (email, password, firstname, lastname, history) => {
           })
         }
         else {
+          //only pick up id, email, firstName, lastName for user
           dispatch({
             type: SIGNUP_SUCCESS,
-            user: response.user
+            user: {
+              id: response.user.id,
+              email: response.user.email,
+              firstName: response.user.first_name,
+              lastName:  response.user.last_name
+            }
           })
-          history.push('/mypies', null)
+          history.push('/pies', null)
         }
       })
       .catch((error) => {
@@ -122,9 +134,15 @@ export const refreshUser = (user) => {
           })
         }
         else {
+          //only pick up id, email, firstName, lastName for user
           dispatch({
             type: REFRESH_USER_SUCCESS,
-            user: response.user
+            user: {
+              id: response.user.id,
+              email: response.user.email,
+              firstName: response.user.first_name,
+              lastName:  response.user.last_name
+            }
           })
         }
       })
