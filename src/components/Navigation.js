@@ -14,7 +14,6 @@ const Navigation = ({
     if(loggedIn) {
       return (
         <>
-        <div><Link to={"/"}>Home</Link></div>
         <div><Link to={"/pies"}>My pies</Link></div>
         <div><Link to={"/pies/new"}>New pie</Link></div>
         <div><Link to={'/'} onClick={() => logout()}>Logout</Link></div>
@@ -24,7 +23,6 @@ const Navigation = ({
     else {
       return (
         <>
-        <div><Link to={"/"}>Home</Link></div>
         <div><Link to={"/login"}>Login</Link></div>
         <div><Link to={"/signup"}>Signup</Link></div>
         </>

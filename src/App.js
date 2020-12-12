@@ -31,7 +31,7 @@ const App = () => {
       <Router>
         <Navigation />
         <Switch>
-          <Route exact path="/" component={ PieGalleryContainer } />
+          <Route exact path="/" component={ LoginForm } />
           <Route exact path="/login" component={ LoginForm } />
           <Route exact path="/signup" component={ SignupForm } />
           <PrivateRoute exact path="/pies" component={ PieGalleryContainer } />
