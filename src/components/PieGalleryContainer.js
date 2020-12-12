@@ -1,17 +1,14 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import PieGallery from './PieGallery'
+import {useSelector} from "react-redux";
 
-export const PieGalleryContainer = ({
-  pies
-}) => {
+export const PieGalleryContainer = () => {
+
+  const pies = useSelector(state => state.authenticationReducer.user.pies)
+
   return (
     <PieGallery pies={pies} />
   )
 }
 
-const mapStateToProps = (state) => ({
-  pies: state.authenticationReducer.user.pies
-})
-
-export default connect(mapStateToProps, null )(PieGalleryContainer)
+export default PieGalleryContainer
