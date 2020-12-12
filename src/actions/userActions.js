@@ -30,7 +30,7 @@ export const login = (email, password, history) => {
           })
         }
         else {
-          //only pick up id, email, firstName, lastName for user
+          //only pick up id, email, firstName, lastName, token for user
           dispatch({
             type: LOGIN_SUCCESS,
             user: {
