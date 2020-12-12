@@ -5,7 +5,7 @@ import Navigation from './components/Navigation'
 import LoginForm from './components/LoginForm'
 import SignupForm from './components/SignupForm'
 import PieForm from "./components/PieForm"
-import PieGallery from "./components/PieGallery"
+import PieGalleryContainer from "./components/PieGalleryContainer"
 import PrivateRoute from './components/PrivateRoute'
 import PieController from './components/PieController'
 
@@ -31,14 +31,12 @@ const App = () => {
       <Router>
         <Navigation />
         <Switch>
-          <Route exact path="/" component={ PieGallery } />
+          <Route exact path="/" component={ PieGalleryContainer } />
           <Route exact path="/login" component={ LoginForm } />
           <Route exact path="/signup" component={ SignupForm } />
-          <PrivateRoute exact path="/pies" component={ PieGallery } />
+          <PrivateRoute exact path="/pies" component={ PieGalleryContainer } />
           <PrivateRoute exact path="/pies/new" component={ PieForm } />
           <PrivateRoute exact path="/pies/:id" component={ PieControllerWrapper } />
-          
-
         </Switch>
       </Router>
     </Provider>
