@@ -30,16 +30,9 @@ export const login = (email, password, history) => {
           })
         }
         else {
-          //only pick up id, email, firstName, lastName, token for user
           dispatch({
             type: LOGIN_SUCCESS,
-            user: {
-              id: response.user.id,
-              email: response.user.email,
-              firstName: response.user.first_name,
-              lastName:  response.user.last_name,
-              token: response.user.token
-            }
+            user: response.user
           })
           history.push('/pies', null)
         }
@@ -82,13 +75,7 @@ export const signup = (email, password, firstname, lastname, history) => {
           //only pick up id, email, firstName, lastName, and token for user
           dispatch({
             type: SIGNUP_SUCCESS,
-            user: {
-              id: response.user.id,
-              email: response.user.email,
-              firstName: response.user.first_name,
-              lastName:  response.user.last_name,
-              token: response.user.token
-            }
+            user: response.user
           })
           history.push('/pies', null)
         }
