@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Pie from './Pie'
-import { connect } from 'react-redux'
-import { fetchPie } from '../actions/pieActions'
 import PieControls from './PieControls'
+import { fetchPie } from '../actions/pieActions'
+import { useSelector, useDispatch} from 'react-redux'
 
 const PieController = ({
-  id=0,
-  fetchPie,
-  pie
+  id = 0
 }) => {
 
-  useEffect(() => {
-    fetchPie(id)
-  }, [id, fetchPie])
-  
   const getPie = () => Object.keys(pie).length > 0 ? <Pie pieData={ pie } /> : null
   const getPieControls = () => Object.keys(pie).length > 0 ? <PieControls pieData={ pie } /> : null
+  const pie = useSelector(state => state.pieReducer.pie)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchPie(id))
+  }, [id])
   
   return (
     <div className='pie-container'>
@@ -27,15 +27,7 @@ const PieController = ({
 }
 
 PieController.propTypes = {
-  id: PropTypes.number.isRequired,
-  fetchPie: PropTypes.func.isRequired
+  id: PropTypes.number.isRequired
 }
 
-const mapStateToProps = (state) => {
-  return {
-    pie: state.pieReducer.pie
-  }
-}
-
-export default connect(mapStateToProps, { fetchPie })(PieController)
-
+export default PieController
