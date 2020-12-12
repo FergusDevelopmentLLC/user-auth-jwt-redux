@@ -1,23 +1,10 @@
-import { SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, REFRESH_USER_REQUEST, REFRESH_USER_FAILURE, REFRESH_USER_SUCCESS } from './types'
+import { SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from './types'
 import { URL_PREFIX } from './urlPrefix'
+import getErrorMessage from '../_helpers/errorHelper'
 
 //TODO, where should this go?
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1)
-}
-
-const getErrorMessage = ( response ) => {
-  
-  let errorMessage = ''
-  
-  if(response.errors) {
-    errorMessage = Object.keys(response.errors).map((key) => `${key.capitalize()} ${[...new Set(response.errors[key])].join(', ')}`).join(', ') + '.'
-  }
-  else if(response.error) {
-    errorMessage = response.error
-  }
-  
-  return errorMessage
 }
 
 export const login = (email, password, history) => {
@@ -50,7 +37,8 @@ export const login = (email, password, history) => {
               id: response.user.id,
               email: response.user.email,
               firstName: response.user.first_name,
-              lastName:  response.user.last_name
+              lastName:  response.user.last_name,
+              token: response.user.token
             }
           })
           history.push('/pies', null)
@@ -91,14 +79,15 @@ export const signup = (email, password, firstname, lastname, history) => {
           })
         }
         else {
-          //only pick up id, email, firstName, lastName for user
+          //only pick up id, email, firstName, lastName, and token for user
           dispatch({
             type: SIGNUP_SUCCESS,
             user: {
               id: response.user.id,
               email: response.user.email,
               firstName: response.user.first_name,
-              lastName:  response.user.last_name
+              lastName:  response.user.last_name,
+              token: response.user.token
             }
           })
           history.push('/pies', null)
@@ -113,44 +102,3 @@ export const signup = (email, password, firstname, lastname, history) => {
     }
 }
 
-export const refreshUser = (user) => {
-  
-  return dispatch => {
-
-    dispatch({ type: REFRESH_USER_REQUEST, email: user.email })
-
-    const requestOptions = {
-      method: 'GET',
-      headers: (user && user.token) ? { 'Authorization': 'Bearer ' + user.token } : {}
-    }
-
-    fetch(`${ URL_PREFIX }/user`, requestOptions)
-      .then(response => response.json())
-      .then(response => {
-        if(response.error || response.errors) {
-          dispatch({ 
-            type: REFRESH_USER_FAILURE,
-            error: getErrorMessage(response)
-          })
-        }
-        else {
-          //only pick up id, email, firstName, lastName for user
-          dispatch({
-            type: REFRESH_USER_SUCCESS,
-            user: {
-              id: response.user.id,
-              email: response.user.email,
-              firstName: response.user.first_name,
-              lastName:  response.user.last_name
-            }
-          })
-        }
-      })
-      .catch((error) => {
-        dispatch({ 
-          type: REFRESH_USER_FAILURE,
-          error: error.toString()
-        })
-      })
-    }
-}
