@@ -1,8 +1,9 @@
-import { CREATE_PIE, FETCH_PIE, UPDATE_PIE, FETCH_PIES } from './types'
+import { CREATE_PIE, FETCH_PIE, UPDATE_PIE, FETCH_PIES, FETCH_PIES_FOR_CURRENT_USER } from './types'
 import { URL_PREFIX } from './urlPrefix'
-import { refreshUser } from '../actions/userActions'
+import getErrorMessage from '../_helpers/errorHelper'
 
-export const createPie = (pie, history, user) => dispatch => {
+
+export const createPie = (pie, history) => dispatch => {
   
   const options = {
     method: 'POST',
@@ -18,7 +19,7 @@ export const createPie = (pie, history, user) => dispatch => {
         payload: pie
       })
     }).then(() => {
-      //dispatch(refreshUser(user))
+      history.push('/pies')
     })
   }
 
@@ -36,7 +37,7 @@ export const fetchPie = (id) => dispatch => {
   
 }
 
-export const updatePie = (pie, user) => dispatch => {
+export const updatePie = (pie) => dispatch => {
 
   const options = {
     method: 'PATCH',
@@ -53,23 +54,57 @@ export const updatePie = (pie, user) => dispatch => {
         type: UPDATE_PIE,
         payload: savedPie
       })
-    }).then(() => {
-      //dispatch(refreshUser(user))
     })
 }
 
-export const fetchPies = () => dispatch => {
+export const fetchPies = () => {
+  return dispatch => {
+    
+    let apiUrl = `${ URL_PREFIX }/pies`
+    
+    fetch(`${apiUrl}`, null)
+      .then(res => res.json())
+      .then((pies) => {
+        
+        dispatch({
+          type: FETCH_PIES,
+          payload: pies
+        })
 
-  let apiUrl = `${ URL_PREFIX }/pies`
-  
-  fetch(`${apiUrl}`, null)
-    .then(res => res.json())
-    .then((pies) => {
-      
-      dispatch({
-        type: FETCH_PIES,
-        payload: pies
       })
+  }
+}
 
-    })
+export const fetchPiesForCurrentUser = (user) => {
+  
+  return dispatch => {
+    
+    const requestOptions = {
+      method: 'GET',
+      headers: (user && user.token) ? { 'Authorization': 'Bearer ' + user.token } : {}
+    }
+
+    fetch(`${ URL_PREFIX }/user`, requestOptions)
+      .then(response => response.json())
+      .then(response => {
+        if(response.error || response.errors) {
+          dispatch({ 
+            type: FETCH_PIES_FOR_CURRENT_USER,
+            error: getErrorMessage(response)
+          })
+        }
+        else {
+          dispatch({
+            type: FETCH_PIES_FOR_CURRENT_USER,
+            payload: response.user.pies
+          })
+        }
+      })
+      .catch((error) => {
+        dispatch({ 
+          type: FETCH_PIES_FOR_CURRENT_USER,
+          error: error.toString()
+        })
+      })
+    }
 }
