@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch} from 'react-redux'
 import { login } from '../actions/userActions'
 import { useHistory } from "react-router"
-import { useSelector } from "react-redux"
-import PropTypes from 'prop-types'
+import { useSelector, useDispatch} from 'react-redux'
 
 export const LoginForm = () => {
 
@@ -48,10 +46,6 @@ export const LoginForm = () => {
       </form>
     </div>
   )
-}
-
-LoginForm.propTypes = {
-  login: PropTypes.func.isRequired
 }
 
 export default LoginForm

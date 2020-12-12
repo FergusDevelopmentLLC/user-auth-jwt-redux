@@ -1,14 +1,13 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
 import { logout } from '../actions/userActions'
+import { useSelector, useDispatch} from 'react-redux'
 
-const Navigation = ({
-  loggedIn = false,
-  user = {},
-  logout
-}) => {
+const Navigation = () => {
+  
+  const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
+  const user = useSelector(state => state.authenticationReducer.user)
+  const dispatch = useDispatch()
 
   const getLinks = () => {
     if(loggedIn) {
@@ -16,7 +15,7 @@ const Navigation = ({
         <>
         <div><Link to={"/pies"}>My pies</Link></div>
         <div><Link to={"/pies/new"}>New pie</Link></div>
-        <div><Link to={'/'} onClick={() => logout()}>Logout</Link></div>
+        <div><Link to={'/'} onClick={() => dispatch(logout())}>Logout</Link></div>
         </>
       )
     }
@@ -51,16 +50,4 @@ const Navigation = ({
   )
 }
 
-Navigation.propTypes = {
-  loggedIn: PropTypes.bool,
-  user: PropTypes.object
-}
-
-const mapStateToProps = (state) => {
-  return {
-    loggedIn: state.authenticationReducer.loggedIn,
-    user: state.authenticationReducer.user
-  }
-}
-
-export default connect(mapStateToProps, { logout })(Navigation)
+export default Navigation
