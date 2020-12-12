@@ -33,7 +33,7 @@ const Navigation = ({
   const getWelcome = () => {
     if(loggedIn) {
       return (
-        <div className="logged-in-name">Welcome back, {user.firstName}</div>
+        <div className="logged-in-name">Welcome back, {user.first_name}</div>
       )
     }
     else {
