@@ -32,7 +32,7 @@ export const login = (email, password, history) => {
         else {
           dispatch({
             type: LOGIN_SUCCESS,
-            user: response.user
+            payload: response.user
           })
           history.push('/pies', null)
         }
@@ -75,7 +75,7 @@ export const signup = (email, password, firstname, lastname, history) => {
           //only pick up id, email, firstName, lastName, and token for user
           dispatch({
             type: SIGNUP_SUCCESS,
-            user: response.user
+            payload: response.user
           })
           history.push('/pies', null)
         }
@@ -90,9 +90,9 @@ export const signup = (email, password, firstname, lastname, history) => {
 }
 
 export const refreshUser = (user) => {
-  
+
   return dispatch => {
-    
+
     dispatch({ type: CURRENT_USER_REFRESH_REQUEST, email: user.email })
 
     const requestOptions = {
