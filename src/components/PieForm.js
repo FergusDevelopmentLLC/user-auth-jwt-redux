@@ -1,20 +1,18 @@
 import React, { useState } from "react"
-
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { createPie } from '../actions/pieActions'
-import { useHistory } from "react-router";
+import { useHistory } from "react-router"
+import { useSelector, useDispatch } from 'react-redux'
 
-export const PieForm = ({
-  createPie,
-  user
-}) => {
+export const PieForm = () => {
+
+  const user = useSelector(state => state.authenticationReducer.user)
+  const dispatch = useDispatch()
+  const history = useHistory()
 
   const [pie, setPie] = useState({
     title: '',
     pieces: ['', '', '', '', '', '', '', '']
   })
-  const history = useHistory()
   
   const setTitle = (event) => {
     setPie({
@@ -32,6 +30,7 @@ export const PieForm = ({
     })
   }
 
+  //TODO: where to put this?
   String.prototype.isEmpty = function() {
     return (this.length === 0 || !this.trim())
   }
@@ -74,7 +73,7 @@ export const PieForm = ({
           }
           else {
             pie.user_id = user.id
-            createPie(pie, user, history)
+            dispatch(createPie(pie, user, history))
           }
         }} />
       </form>
@@ -82,14 +81,4 @@ export const PieForm = ({
   )
 }
 
-PieForm.propTypes = {
-  createPie: PropTypes.func.isRequired
-}
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.authenticationReducer.user
-  }
-}
-
-export default connect(mapStateToProps, { createPie })(PieForm)
+export default PieForm

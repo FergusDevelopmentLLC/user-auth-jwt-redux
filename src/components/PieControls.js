@@ -1,25 +1,24 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import { updatePie } from '../actions/pieActions'
+import { useSelector, useDispatch } from 'react-redux'
 
 const PieControls = ({
   pieData = {
     pieces: [],
     chunks: []
-  },
-  updatePie,
-  user
+  }
 }) => {
+  const user = useSelector(state => state.authenticationReducer.user)
+  const dispatch = useDispatch()
 
   const addChunk = (index) => {
     const piece = [parseInt(1 + index.toString()), parseInt(2 + index.toString()), parseInt(3 + index.toString()), parseInt(4 + index.toString()), parseInt(5 + index.toString()), parseInt(6 + index.toString()), parseInt(7 + index.toString())]
     for (let chunk of piece) {
       if(!pieData.chunks.includes(chunk)) {
-        updatePie({
+        dispatch(updatePie({
           ...pieData,
           chunks: [...pieData.chunks, chunk]
-        }, user)
+        }, user))
         break
       }
     }
@@ -29,10 +28,10 @@ const PieControls = ({
     const piece = [parseInt(7 + index.toString()), parseInt(6 + index.toString()), parseInt(5 + index.toString()), parseInt(4 + index.toString()), parseInt(3 + index.toString()), parseInt(2 + index.toString()), parseInt(1 + index.toString())]
     for (let chunk of piece) {
       if(pieData.chunks.includes(chunk)) {
-        updatePie({
+        dispatch(updatePie({
           ...pieData,
           chunks: pieData.chunks.filter((c) => c !== chunk)
-        }, user)
+        }, user))
         break
       }
     }
@@ -52,14 +51,4 @@ const PieControls = ({
   return getButtons()
 }
 
-PieControls.propTypes = {
-  updatePie: PropTypes.func.isRequired,
-}
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.authenticationReducer.user
-  }
-}
-
-export default connect(mapStateToProps, { updatePie })(PieControls)
+export default PieControls
