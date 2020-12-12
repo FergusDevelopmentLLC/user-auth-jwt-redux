@@ -1,8 +1,7 @@
-import { CREATE_PIE, FETCH_PIE, UPDATE_PIE, FETCH_PIES, FETCH_PIES_FOR_CURRENT_USER } from "../actions/types";
+import { CREATE_PIE, FETCH_PIE, UPDATE_PIE } from "../actions/types";
 
 const initialState = {
-  pie: {},
-  pies: []
+  pie: {}
 }
 
 export default (state = initialState, action) => {
@@ -21,16 +20,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         pie: action.payload
-      };
-    case FETCH_PIES:
-      return {
-        ...state,
-        pies: action.payload
-      };
-    case FETCH_PIES_FOR_CURRENT_USER:
-      return {
-        ...state,
-        pies: action.payload
       };
     default:
       return state

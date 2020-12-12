@@ -1,4 +1,4 @@
-import { CREATE_PIE, FETCH_PIE, UPDATE_PIE, FETCH_PIES, FETCH_PIES_FOR_CURRENT_USER } from './types'
+import { CREATE_PIE, FETCH_PIE, UPDATE_PIE } from './types'
 import { URL_PREFIX } from './urlPrefix'
 import getErrorMessage from '../_helpers/errorHelper'
 
@@ -20,7 +20,7 @@ export const createPie = (pie, history) => dispatch => {
     }).then(() => {
       history.push('/pies')
     })
-  }
+}
 
 export const fetchPie = (id) => dispatch => {
   const apiUrl = `${ URL_PREFIX }/pies/${id}`
@@ -54,38 +54,4 @@ export const updatePie = (pie) => dispatch => {
         payload: savedPie
       })
     })
-}
-
-export const fetchPiesForCurrentUser = (user) => {
-  
-  return dispatch => {
-    
-    const requestOptions = {
-      method: 'GET',
-      headers: (user && user.token) ? { 'Authorization': 'Bearer ' + user.token } : {}
-    }
-
-    fetch(`${ URL_PREFIX }/user`, requestOptions)
-      .then(response => response.json())
-      .then(response => {
-        if(response.error || response.errors) {
-          dispatch({ 
-            type: FETCH_PIES_FOR_CURRENT_USER,
-            error: getErrorMessage(response)
-          })
-        }
-        else {
-          dispatch({
-            type: FETCH_PIES_FOR_CURRENT_USER,
-            payload: response.user.pies
-          })
-        }
-      })
-      .catch((error) => {
-        dispatch({ 
-          type: FETCH_PIES_FOR_CURRENT_USER,
-          error: error.toString()
-        })
-      })
-    }
 }
