@@ -3,10 +3,10 @@ import React, { useState } from "react"
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createPie } from '../actions/pieActions'
+import { useHistory } from "react-router";
 
 export const PieForm = ({
   createPie,
-  history,
   user
 }) => {
 
@@ -14,6 +14,7 @@ export const PieForm = ({
     title: '',
     pieces: ['', '', '', '', '', '', '', '']
   })
+  const history = useHistory()
   
   const setTitle = (event) => {
     setPie({
@@ -73,8 +74,7 @@ export const PieForm = ({
           }
           else {
             pie.user_id = user.id
-            console.log('pie', pie)
-            createPie(pie, history, user)
+            createPie(pie, user, history)
           }
         }} />
       </form>
