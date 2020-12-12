@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
 import { signup } from '../actions/userActions'
-import { useHistory } from "react-router";
-import PropTypes from 'prop-types'
+import { useHistory } from "react-router"
+import { useSelector, useDispatch } from 'react-redux'
 
-export const SignupForm = ({
-  signup,
-  errorMessage
-}) => {
+export const SignupForm = () => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -15,6 +11,8 @@ export const SignupForm = ({
   const [lastname, setLastname] = useState('')
   const [signupButtonDisabled, setSignupButtonDisabled] = useState(true)
   const history = useHistory()
+  const errorMessage = useSelector(state => state.authenticationReducer.errorMessage)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     setSignupButtonDisabled(!(email && password && firstname))
@@ -34,7 +32,7 @@ export const SignupForm = ({
 
   const submit = (event) => {
     event.preventDefault()
-    signup(email, password, firstname, lastname, history)
+    dispatch(signup(email, password, firstname, lastname, history))
   }
 
   return (
@@ -61,14 +59,4 @@ export const SignupForm = ({
   )
 }
 
-SignupForm.propTypes = {
-  signup: PropTypes.func.isRequired
-}
-
-const mapStateToProps = (state) => {
-  return {
-    errorMessage: state.authenticationReducer.errorMessage
-  }
-}
-
-export default connect(mapStateToProps, { signup })(SignupForm)
+export default SignupForm

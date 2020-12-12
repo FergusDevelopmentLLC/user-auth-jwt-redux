@@ -1,26 +1,22 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux'
+import { Route, Redirect } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const PrivateRoute = ({ 
   component: Component,
-  loggedIn = false,
   ...rest
-}) => (
-  <Route {...rest} render={props => {
-    if(loggedIn) {
-      return <Component {...props} />
-    }
-    else {
-      return <Redirect to={{ pathname: '/login', state: { from: props.location } }} /> 
-    }
-  }} />
-)
-
-const mapStateToProps = (state) => {
-  return {
-    loggedIn: state.authenticationReducer.loggedIn
-  }
+}) => {
+  const loggedIn = useSelector(state => state.authenticationReducer.loggedIn)
+  return (
+    <Route {...rest} render={props => {
+      if(loggedIn) {
+        return <Component {...props} />
+      }
+      else {
+        return <Redirect to={{ pathname: '/login', state: { from: props.location } }} /> 
+      }
+    }} />
+  )
 }
 
-export default connect(mapStateToProps, null)(PrivateRoute)
+export default PrivateRoute
