@@ -23,7 +23,7 @@ const PieGallery = ({
 }
 
 PieGallery.propTypes = {
-  fetchPies: PropTypes.array
+  pies: PropTypes.array
 }
 
 export default PieGallery

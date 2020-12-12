@@ -2,7 +2,6 @@ import { CREATE_PIE, FETCH_PIE, UPDATE_PIE, FETCH_PIES, FETCH_PIES_FOR_CURRENT_U
 import { URL_PREFIX } from './urlPrefix'
 import getErrorMessage from '../_helpers/errorHelper'
 
-
 export const createPie = (pie, history) => dispatch => {
   
   const options = {
@@ -55,24 +54,6 @@ export const updatePie = (pie) => dispatch => {
         payload: savedPie
       })
     })
-}
-
-export const fetchPies = () => {
-  return dispatch => {
-    
-    let apiUrl = `${ URL_PREFIX }/pies`
-    
-    fetch(`${apiUrl}`, null)
-      .then(res => res.json())
-      .then((pies) => {
-        
-        dispatch({
-          type: FETCH_PIES,
-          payload: pies
-        })
-
-      })
-  }
 }
 
 export const fetchPiesForCurrentUser = (user) => {
